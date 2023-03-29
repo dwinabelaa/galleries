@@ -1,4 +1,10 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Home') }}
+        </h2>
+    </x-slot>
+
     <div class="d-flex card">
         <div class="card-body flex-fill justify-content-center text-center" style="background-color: #a2d9ff">
             <form action="{{ route('home.store') }}" method="post" enctype="multipart/form-data" class="container mt-5">
@@ -8,6 +14,14 @@
                 </div>
                 <div class="mb-2">
                     <input type="text" id="name" name="name" placeholder="name">
+                </div>
+                <div class="mb-2 " style="width: 30%">
+                    <select name="kategori_id" class="form-select" aria-label="Default select example">
+                        <option selected>Pilih kategori je</option>
+                        @foreach ($kategori as $item)
+                            <option value={{ $item['id'] }}>{{ $item['nama'] }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="mb-3">
                     <input type="file" id="image" name="image[]" class="border">
@@ -26,6 +40,7 @@
                 <div class="col-md-3 mb-4">
                     <div class="img-custom rounded mb-2">
                         <h3 class="mb-2">{{ $data['name'] }}</h3>
+                        <h3 class="mb-2">kategori : {{ $data['kategoris']['nama'] }}</h3>
                         <p>{{ $data->getFirstMedia('image') }}</p>
 
                         <form action="{{ route('home.destroy', $data['id']) }}" method="POST">

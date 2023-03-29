@@ -1,9 +1,14 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Models\Home;
+use App\Models\User;
+use App\Models\Kategori;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Models\Home;
+use App\Http\Controllers\DetailKController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\KategoriController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +26,10 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+
+    $user = User::find(Auth::user()->id);
     return view('dashboard', [
-        'home' => Home::all()
+        'home' => $user->home()->with('user')->get(),
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -35,5 +42,9 @@ Route::middleware('auth')->group(function () {
 // Route::match(['get', 'post'], '/home', [HomeController::class, 'index', 'store'])->middleware(['auth', 'verified'])->name(['home']);;
 
 Route::resource('home', HomeController::class);
+Route::resource('kategori', KategoriController::class);
+// Route::get('detail_kategori', function () {
+//     return view('detail_kategori');
+// });
 
 require __DIR__ . '/auth.php';

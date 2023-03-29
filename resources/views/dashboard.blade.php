@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Home') }}
+            {{ __('Dashboard') }}
         </h2>
     </x-slot>
 
@@ -18,7 +18,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($home as $item)
+                                @forelse ($home as $item)
                                     <tr>
                                         <div>
                                             <td>{{ $item['name'] }}</td>
@@ -28,7 +28,11 @@
                                                     style="max-width: 400px; height: auto"></td>
                                         </div>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="text-center">No Data</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

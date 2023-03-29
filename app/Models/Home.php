@@ -13,5 +13,15 @@ class Home extends Model implements HasMedia
     use InteractsWithMedia;
 
     // protected $guarded = ['id'];
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'user_id', 'kategoris_id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function kategoris()
+    {
+        return $this->belongsTo(Kategori::class);
+    }
 }
