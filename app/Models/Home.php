@@ -14,6 +14,8 @@ class Home extends Model implements HasMedia
 
     // protected $guarded = ['id'];
     protected $fillable = ['name', 'user_id', 'kategoris_id'];
+    // mengatasi n+1 problem
+    protected $with = ['media'];
 
     public function scopeFilter($query, array $filters)
     {
