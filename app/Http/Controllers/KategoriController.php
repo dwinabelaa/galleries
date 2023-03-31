@@ -10,10 +10,12 @@ class KategoriController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $kategori = Kategori::all();
+
         return view('kategori', [
-            'kategori' => Kategori::all(),
+            'kategori' => $kategori,
         ]);
     }
 
@@ -42,8 +44,13 @@ class KategoriController extends Controller
      */
     public function show(string $id)
     {
-        $kategori = Kategori::findOrFail($id);
-        return view('detail_kategori', compact('kategori'));
+        // bisa menggunakan compact seperti ini bisa juga langsung ditambahkan parameter kedua 
+        // $kategori = Kategori::findOrFail($id);
+        // return view('detail_kategori', compact('kategori'));
+
+        return view('detail_kategori', [
+            'kategori' => Kategori::findOrFail($id)
+        ]);
     }
 
     /**
@@ -51,7 +58,12 @@ class KategoriController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // $kategori = Kategori::findOrFail($id);
+        // return view('edit_kategori', compact('kategori'));
+
+        return view('edit_kategori', [
+            'kategori' => Kategori::findOrFail($id)
+        ]);
     }
 
     /**
@@ -59,14 +71,19 @@ class KategoriController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Kategori::findOrFail($id)->update([
+            'namaa' => $request->nama
+        ]);
+
+        return redirect()->route('kategori.show', $id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Kategori $kategori)
     {
-        //
+        $kategori->delete();
+        return redirect()->route('kategori.index');
     }
 }

@@ -14,13 +14,18 @@ class HomeController extends Controller
     {
         $user = User::find(Auth::user()->id);
 
-        // return view('home', compact('homes'));
+        // $home = Home::all();
+        // if (isset($req['search'])) {
+        //     $home = $home->where('id', $req['search'])->get();
+        // }
 
+        // return view('home', compact('homes'));
         return view('home', [
             // 'home' => Home::all(),
             // 'home' => $user->home()->with('user'), 
 
-            'home' => $user->home()->with('user')->with('kategoris')->get(),
+            'home' => $user->home()->with('user')->with('kategoris')->filter(request(['search']))->get(),
+            // 'home' => $user->home()->with('user')->with('kategoris')->get(),
             'kategori' => Kategori::all()
         ]);
     }

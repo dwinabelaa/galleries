@@ -15,7 +15,7 @@
                 <div class="mb-2">
                     <input type="text" id="name" name="name" placeholder="name">
                 </div>
-                <div class="mb-2 " style="width: 30%">
+                <div class="mb-2">
                     <select name="kategori_id" class="form-select" aria-label="Default select example">
                         <option selected>Pilih kategori je</option>
                         @foreach ($kategori as $item)
@@ -36,6 +36,21 @@
         </svg>
         <div class="card-body flex-fill row">
             <h2 class="text-center fw-bold fs-4 mb-3">All Images</h2>
+            `
+            <div class="mb-2">
+                <form action="{{ route('home.index') }}" class="d-flex" method="get">
+                    <select name="search" class="form-select me-2" aria-label="Default select example">
+                        <option value="">All</option>
+                        @foreach ($kategori as $item)
+                            <option value={{ $item['id'] }}
+                                {{ request()->input('search') == $item['id'] ? 'selected' : '' }}>{{ $item['nama'] }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="btn btn-outline-primary">Filter</button>
+                </form>
+            </div>
+
             @foreach ($home as $data)
                 <div class="col-md-3 mb-4">
                     <div class="img-custom rounded mb-2">

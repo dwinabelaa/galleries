@@ -43,8 +43,5 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('home', HomeController::class);
 Route::resource('kategori', KategoriController::class);
-// Route::get('detail_kategori', function () {
-//     return view('detail_kategori');
-// });
 
 require __DIR__ . '/auth.php';
